@@ -1,0 +1,162 @@
+<h2>User Management</h2>
+
+<hr>
+
+<button
+  *ngIf="!showForm"
+  (click)="showForm = true">
+
+  + Add User
+
+</button>
+
+<div *ngIf="showForm">
+
+  <hr>
+
+  <h3>
+
+    {{ editId ? 'Edit User' : 'Add User' }}
+
+  </h3>
+
+  <input
+    type="text"
+    placeholder="Full Name"
+    [(ngModel)]="newUser.full_name">
+
+  <br><br>
+
+  <input
+    type="text"
+    placeholder="Username"
+    [(ngModel)]="newUser.username">
+
+  <br><br>
+
+  <input
+    type="email"
+    placeholder="Email"
+    [(ngModel)]="newUser.email">
+
+  <br><br>
+
+  <input
+    *ngIf="!editId"
+    type="password"
+    placeholder="Password"
+    [(ngModel)]="newUser.password">
+
+  <br *ngIf="!editId">
+  <br *ngIf="!editId">
+
+  <select [(ngModel)]="newUser.level_id">
+
+    <option [value]="1">
+      Super Admin
+    </option>
+
+    <option [value]="2">
+      Manager
+    </option>
+
+    <option [value]="3">
+      Staff
+    </option>
+
+  </select>
+
+  <br><br>
+
+  <div *ngIf="editId">
+
+    <select [(ngModel)]="newUser.is_active">
+
+      <option [value]="1">
+        Active
+      </option>
+
+      <option [value]="0">
+        Inactive
+      </option>
+
+    </select>
+
+    <br><br>
+
+  </div>
+
+  <button (click)="saveUser()">
+
+    {{ editId ? 'Update User' : 'Add User' }}
+
+  </button>
+
+  <button
+    (click)="resetForm()">
+
+    Cancel
+
+  </button>
+
+  <hr>
+
+</div>
+
+<table border="1">
+
+  <thead>
+
+    <tr>
+      <th>ID</th>
+      <th>Nama</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Level</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    @for (user of users; track user.id) {
+
+      <tr>
+
+        <td>{{ user.id }}</td>
+        <td>{{ user.full_name }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.level_name }}</td>
+
+        <td>
+          {{ user.is_active == 1 ? 'Active' : 'Inactive' }}
+        </td>
+
+        <td>
+
+          <button
+            (click)="editUser(user)">
+
+            Edit
+
+          </button>
+
+          <button
+            (click)="deleteUser(user.id)">
+
+            Delete
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    }
+
+  </tbody>
+
+</table>

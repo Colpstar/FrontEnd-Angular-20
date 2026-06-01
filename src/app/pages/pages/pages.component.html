@@ -1,0 +1,148 @@
+<h2>Pages Management</h2>
+
+<hr>
+
+<button
+  *ngIf="!showForm"
+  (click)="showForm = true">
+
+  + Add Page
+
+</button>
+
+<div *ngIf="showForm">
+
+  <hr>
+
+  <h3>
+
+    {{ editId ? 'Edit Page' : 'Add Page' }}
+
+  </h3>
+
+  <input
+    type="text"
+    placeholder="Page Name"
+    [(ngModel)]="newPage.page_name">
+
+  <br><br>
+
+  <input
+    type="text"
+    placeholder="Route"
+    [(ngModel)]="newPage.route">
+
+  <br><br>
+
+  <input
+    type="text"
+    placeholder="Description"
+    [(ngModel)]="newPage.description">
+
+  <br><br>
+
+  <input
+    type="number"
+    placeholder="Sort Order"
+    [(ngModel)]="newPage.sort_order">
+
+  <br><br>
+
+  <div *ngIf="editId">
+
+    <select [(ngModel)]="newPage.is_active">
+
+      <option [value]="1">
+        Active
+      </option>
+
+      <option [value]="0">
+        Inactive
+      </option>
+
+    </select>
+
+    <br><br>
+
+  </div>
+
+  <button
+    (click)="savePage()">
+
+    {{ editId ? 'Update Page' : 'Add Page' }}
+
+  </button>
+
+  <button
+    (click)="resetForm()">
+
+    Cancel
+
+  </button>
+
+  <hr>
+
+</div>
+
+<table border="1">
+
+  <thead>
+
+    <tr>
+      <th>ID</th>
+      <th>Page Name</th>
+      <th>Route</th>
+      <th>Description</th>
+      <th>Order</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    @for(page of pages; track page.id) {
+
+      <tr>
+
+        <td>{{ page.id }}</td>
+
+        <td>{{ page.page_name }}</td>
+
+        <td>{{ page.route }}</td>
+
+        <td>{{ page.description }}</td>
+
+        <td>{{ page.sort_order }}</td>
+
+        <td>
+          {{ page.is_active == 1 ? 'Active' : 'Inactive' }}
+        </td>
+
+        <td>
+
+          <button
+            (click)="editPage(page)">
+
+            Edit
+
+          </button>
+
+          <button
+            *ngIf="page.is_active == 1"
+            (click)="deletePage(page.id)">
+
+            Nonaktifkan
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    }
+
+  </tbody>
+
+</table>

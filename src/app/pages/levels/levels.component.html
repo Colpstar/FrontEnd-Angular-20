@@ -1,0 +1,128 @@
+<h2>Level Management</h2>
+
+<hr>
+
+<button
+  *ngIf="!showForm"
+  (click)="showForm = true">
+
+  + Add Level
+
+</button>
+
+<div *ngIf="showForm">
+
+  <hr>
+
+  <h3>
+
+    {{ editId ? 'Edit Level' : 'Add Level' }}
+
+  </h3>
+
+  <input
+    type="text"
+    placeholder="Level Name"
+    [(ngModel)]="newLevel.name">
+
+  <br><br>
+
+  <input
+    type="text"
+    placeholder="Description"
+    [(ngModel)]="newLevel.description">
+
+  <br><br>
+
+  <div *ngIf="editId">
+
+    <select [(ngModel)]="newLevel.is_active">
+
+      <option [value]="1">
+        Active
+      </option>
+
+      <option [value]="0">
+        Inactive
+      </option>
+
+    </select>
+
+    <br><br>
+
+  </div>
+
+  <button
+    (click)="saveLevel()">
+
+    {{ editId ? 'Update Level' : 'Add Level' }}
+
+  </button>
+
+  <button
+    (click)="resetForm()">
+
+    Cancel
+
+  </button>
+
+  <hr>
+
+</div>
+
+<table border="1">
+
+  <thead>
+
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    @for (level of levels; track level.id) {
+
+      <tr>
+
+        <td>{{ level.id }}</td>
+
+        <td>{{ level.name }}</td>
+
+        <td>{{ level.description }}</td>
+
+        <td>
+          {{ level.is_active == 1 ? 'Active' : 'Inactive' }}
+        </td>
+
+        <td>
+
+          <button
+            (click)="editLevel(level)">
+
+            Edit
+
+          </button>
+
+          <button
+            *ngIf="level.is_active == 1"
+            (click)="deleteLevel(level.id)">
+
+            Nonaktifkan
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    }
+
+  </tbody>
+
+</table>

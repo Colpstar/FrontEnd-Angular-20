@@ -1,0 +1,86 @@
+<h2>Permission Management</h2>
+
+<hr>
+
+<h3>Assign Permission</h3>
+
+<select
+  [(ngModel)]="selectedLevelId">
+
+  <option [value]="0">
+    Pilih Level
+  </option>
+
+  @for(level of levels; track level.id) {
+
+    <option [value]="level.id">
+
+      {{ level.name }}
+
+    </option>
+
+  }
+
+</select>
+
+<br><br>
+
+<h4>Pages</h4>
+
+<div
+  *ngFor="let page of pages">
+
+  <input
+    type="checkbox"
+    [value]="page.id"
+    (change)="togglePage(page.id)">
+
+  {{ page.page_name }}
+
+</div>
+
+<br>
+
+<button
+  (click)="savePermission()">
+
+  Save Permission
+
+</button>
+
+<hr>
+
+<h3>Permission List</h3>
+
+<table border="1">
+
+  <thead>
+
+    <tr>
+      <th>Level ID</th>
+      <th>Page ID</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    @for(permission of permissions; track permission.level_id + '-' + permission.page_id) {
+
+      <tr>
+
+        <td>
+          {{ permission.level_id }}
+        </td>
+
+        <td>
+          {{ permission.page_id }}
+        </td>
+
+      </tr>
+
+    }
+
+  </tbody>
+
+</table>
