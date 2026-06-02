@@ -1,36 +1,22 @@
-<div *ngIf="isLoggedIn(); else loginPage" style="display:flex">
-
-  <div
-    style="
-      width:250px;
-      background:#f5f5f5;
-      padding:20px;
-      min-height:100vh;
-    "
-  >
-
-    <h3>MENU</h3>
-
-    <div *ngFor="let menu of menus">
-
-      <a [routerLink]="menu.route">
-        {{ menu.page_name }}
-      </a>
-
-      <br><br>
-
+<div *ngIf="isLoggedIn(); else loginPage" class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>UAM</h2>
+      <span>User Access Management</span>
     </div>
 
-    <hr>
+    <nav>
+      <a *ngFor="let menu of menus" [routerLink]="menu.route" class="menu-item">
+        {{ menu.page_name }}
+      </a>
+    </nav>
 
-    <button (click)="logout()">Logout</button>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </aside>
 
-  </div>
-
-  <div style="padding:20px;width:100%;">
+  <main class="content">
     <router-outlet></router-outlet>
-  </div>
-
+  </main>
 </div>
 
 <ng-template #loginPage>

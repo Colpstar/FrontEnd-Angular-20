@@ -2,80 +2,59 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
-  templateUrl: './login.component.html'
+  imports: [FormsModule, CardModule, InputTextModule, ButtonModule],
+  templateUrl: './login.component.html',
 })
 export class LoginComponent {
-
-  username = '';
+  login = '';
   password = '';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  login() {
+  login1() {
+    this.http
+      .post('http://localhost:8000/api/login', {
+        login: this.login,
+        password: this.password,
+      })
+      .subscribe({
+        next: (res: any) => {
+          localStorage.clear();
 
-    this.http.post(
-      'http://localhost:8000/api/login',
-      {
-        username: this.username,
-        password: this.password
-      }
-    ).subscribe({
+          localStorage.setItem('token', res.token);
 
-      next: (res: any) => {
+          localStorage.setItem('level_id', res.user.level_id.toString());
 
-        localStorage.clear();
+          localStorage.setItem('user_id', res.user.id.toString());
 
-        localStorage.setItem(
-          'token',
-          res.token
-        );
+          localStorage.setItem('full_name', res.user.full_name);
 
-        localStorage.setItem(
-          'level_id',
-          res.user.level_id.toString()
-        );
+          this.http
+            .get(
+              'http://localhost:8000/api/my-pages?level_id=' + res.user.level_id
+            )
+            .subscribe({
+              next: (res: any) => {
+                console.log(res);
+                localStorage.setItem('menus', JSON.stringify(res));
+              },
+            });
 
-        localStorage.setItem(
-          'user_id',
-          res.user.id.toString()
-        );
+          alert('Login berhasil');
 
-        localStorage.setItem(
-          'full_name',
-          res.user.full_name
-        );
+          window.location.href = '/dashboard';
+        },
 
-     this.http.get('http://localhost:8000/api/my-pages?level_id=' + res.user.level_id).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        localStorage.setItem('menus', JSON.stringify(res));
-      }
-    });
-
-        alert('Login berhasil');
-
-       window.location.href = '/dashboard';
-
-      },
-
-      error: (err) => {
-
-        alert(
-          err.error.message
-        );
-
-      }
-
-    });
-
+        error: (err) => {
+          alert(err.error.message);
+        },
+      });
   }
-
 }

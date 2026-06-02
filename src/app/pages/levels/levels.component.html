@@ -1,79 +1,51 @@
 <h2>Level Management</h2>
 
-<hr>
+<hr />
 
-<button
-  *ngIf="!showForm"
-  (click)="showForm = true">
-
+<button class="btn btn-success" *ngIf="!showForm" (click)="showForm = true">
   + Add Level
-
 </button>
 
 <div *ngIf="showForm">
-
-  <hr>
+  <hr />
 
   <h3>
-
-    {{ editId ? 'Edit Level' : 'Add Level' }}
-
+    {{ editId ? "Edit Level" : "Add Level" }}
   </h3>
 
-  <input
-    type="text"
-    placeholder="Level Name"
-    [(ngModel)]="newLevel.name">
+  <input type="text" placeholder="Level Name" [(ngModel)]="newLevel.name" />
 
-  <br><br>
+  <br /><br />
 
   <input
     type="text"
     placeholder="Description"
-    [(ngModel)]="newLevel.description">
+    [(ngModel)]="newLevel.description"
+  />
 
-  <br><br>
+  <br /><br />
 
   <div *ngIf="editId">
-
     <select [(ngModel)]="newLevel.is_active">
+      <option [value]="1">Active</option>
 
-      <option [value]="1">
-        Active
-      </option>
-
-      <option [value]="0">
-        Inactive
-      </option>
-
+      <option [value]="0">Inactive</option>
     </select>
 
-    <br><br>
-
+    <br /><br />
   </div>
 
-  <button
-    (click)="saveLevel()">
-
-    {{ editId ? 'Update Level' : 'Add Level' }}
-
+  <button class="btn btn-primary" (click)="saveLevel()">
+    {{ editId ? "Update Level" : "Add Level" }}
   </button>
 
-  <button
-    (click)="resetForm()">
+  <button class="btn btn-secondary" (click)="resetForm()">Cancel</button>
 
-    Cancel
-
-  </button>
-
-  <hr>
-
+  <hr />
 </div>
 
-<table border="1">
-
+<table class="table table-dark table-hover table-striped">
   <thead>
-
     <tr>
       <th>ID</th>
       <th>Name</th>
@@ -81,48 +53,35 @@
       <th>Status</th>
       <th>Action</th>
     </tr>
-
   </thead>
 
   <tbody>
-
     @for (level of levels; track level.id) {
 
-      <tr>
+    <tr>
+      <td>{{ level.id }}</td>
 
-        <td>{{ level.id }}</td>
+      <td>{{ level.name }}</td>
 
-        <td>{{ level.name }}</td>
+      <td>{{ level.description }}</td>
 
-        <td>{{ level.description }}</td>
+      <td>
+        {{ level.is_active == 1 ? "Active" : "Inactive" }}
+      </td>
 
-        <td>
-          {{ level.is_active == 1 ? 'Active' : 'Inactive' }}
-        </td>
+      <td>
+        <button class="btn btn-warning" (click)="editLevel(level)">Edit</button>
 
-        <td>
-
-          <button
-            (click)="editLevel(level)">
-
-            Edit
-
-          </button>
-
-          <button
-            *ngIf="level.is_active == 1"
-            (click)="deleteLevel(level.id)">
-
-            Nonaktifkan
-
-          </button>
-
-        </td>
-
-      </tr>
+        <button
+          class="btn btn-danger"
+          *ngIf="level.is_active == 1"
+          (click)="deleteLevel(level.id)"
+        >
+          Nonaktifkan
+        </button>
+      </td>
+    </tr>
 
     }
-
   </tbody>
-
 </table>

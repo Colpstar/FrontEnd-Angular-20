@@ -1,86 +1,68 @@
 <h2>Permission Management</h2>
 
-<hr>
+<hr />
 
-<h3>Assign Permission</h3>
+<h3 class="mb-3">Assign Permission</h3>
 
-<select
-  [(ngModel)]="selectedLevelId">
-
-  <option [value]="0">
-    Pilih Level
-  </option>
+<select class="form-control" [(ngModel)]="selectedLevelId">
+  <option [value]="0">Pilih Level</option>
 
   @for(level of levels; track level.id) {
 
-    <option [value]="level.id">
-
-      {{ level.name }}
-
-    </option>
+  <option [value]="level.id">
+    {{ level.name }}
+  </option>
 
   }
-
 </select>
 
-<br><br>
+<br /><br />
 
-<h4>Pages</h4>
+<h4 class="mb-3">Pages</h4>
 
-<div
-  *ngFor="let page of pages">
-
+<div class="form-check" *ngFor="let page of pages">
   <input
     type="checkbox"
+    class="form-check-input"
     [value]="page.id"
-    (change)="togglePage(page.id)">
+    (change)="togglePage(page.id)"
+  />
 
-  {{ page.page_name }}
-
+  <label class="form-check-label">{{ page.page_name }}</label>
 </div>
 
-<br>
+<br />
 
-<button
-  (click)="savePermission()">
-
+<button class="btn btn-primary" (click)="savePermission()">
   Save Permission
-
 </button>
 
-<hr>
+<hr />
 
-<h3>Permission List</h3>
+<h3 class="mb-3">Permission List</h3>
 
-<table border="1">
-
+<table class="table table-dark table-hover table-striped">
   <thead>
-
     <tr>
       <th>Level ID</th>
       <th>Page ID</th>
     </tr>
-
   </thead>
 
   <tbody>
+    @for(permission of permissions; track permission.level_id + '-' +
+    permission.page_id) {
 
-    @for(permission of permissions; track permission.level_id + '-' + permission.page_id) {
+    <tr>
+      <td>
+        {{ permission.level_id }}
+      </td>
 
-      <tr>
-
-        <td>
-          {{ permission.level_id }}
-        </td>
-
-        <td>
-          {{ permission.page_id }}
-        </td>
-
-      </tr>
+      <td>
+        {{ permission.page_id }}
+      </td>
+    </tr>
 
     }
-
   </tbody>
-
 </table>

@@ -1,16 +1,33 @@
-<h2>Dashboard</h2>
+<h1 class="page-title">Dashboard</h1>
 
-<div>
-  Total Users :
-  {{ dashboard.total_users }}
-</div>
+<div class="stats-container">
+  <p-card class="stat-card">
+    <div class="stat-icon">👥</div>
 
-<div>
-  Total Levels :
-  {{ dashboard.total_levels }}
-</div>
+    <div class="stat-value">
+      {{ dashboard.total_users || 0 }}
+    </div>
 
-<div>
-  Total Pages :
-  {{ dashboard.total_pages }}
+    <div class="stat-label">Total Users</div>
+  </p-card>
+
+  <p-card class="stat-card">
+    <div class="stat-icon">🛡️</div>
+
+    <div class="stat-value">
+      {{ dashboard.total_levels || 0 }}
+    </div>
+
+    <div class="stat-label">Total Levels</div>
+  </p-card>
+
+  <p-card class="stat-card">
+    <div class="stat-icon">📄</div>
+
+    <div class="stat-value">
+      {{ dashboard.total_pages || 0 }}
+    </div>
+
+    <div class="stat-label">Total Pages</div>
+  </p-card>
 </div>

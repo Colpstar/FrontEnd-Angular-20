@@ -1,93 +1,63 @@
 <h2>Pages Management</h2>
 
-<hr>
+<hr />
 
-<button
-  *ngIf="!showForm"
-  (click)="showForm = true">
-
+<button class="btn btn-success" *ngIf="!showForm" (click)="showForm = true">
   + Add Page
-
 </button>
 
 <div *ngIf="showForm">
-
-  <hr>
+  <hr />
 
   <h3>
-
-    {{ editId ? 'Edit Page' : 'Add Page' }}
-
+    {{ editId ? "Edit Page" : "Add Page" }}
   </h3>
 
-  <input
-    type="text"
-    placeholder="Page Name"
-    [(ngModel)]="newPage.page_name">
+  <input type="text" placeholder="Page Name" [(ngModel)]="newPage.page_name" />
 
-  <br><br>
+  <br /><br />
 
-  <input
-    type="text"
-    placeholder="Route"
-    [(ngModel)]="newPage.route">
+  <input type="text" placeholder="Route" [(ngModel)]="newPage.route" />
 
-  <br><br>
+  <br /><br />
 
   <input
     type="text"
     placeholder="Description"
-    [(ngModel)]="newPage.description">
+    [(ngModel)]="newPage.description"
+  />
 
-  <br><br>
+  <br /><br />
 
   <input
     type="number"
     placeholder="Sort Order"
-    [(ngModel)]="newPage.sort_order">
+    [(ngModel)]="newPage.sort_order"
+  />
 
-  <br><br>
+  <br /><br />
 
   <div *ngIf="editId">
-
     <select [(ngModel)]="newPage.is_active">
+      <option [value]="1">Active</option>
 
-      <option [value]="1">
-        Active
-      </option>
-
-      <option [value]="0">
-        Inactive
-      </option>
-
+      <option [value]="0">Inactive</option>
     </select>
 
-    <br><br>
-
+    <br /><br />
   </div>
 
-  <button
-    (click)="savePage()">
-
-    {{ editId ? 'Update Page' : 'Add Page' }}
-
+  <button class="btn btn-primary" (click)="savePage()">
+    {{ editId ? "Update Page" : "Add Page" }}
   </button>
 
-  <button
-    (click)="resetForm()">
+  <button class="btn btn-secondary" (click)="resetForm()">Cancel</button>
 
-    Cancel
-
-  </button>
-
-  <hr>
-
+  <hr />
 </div>
 
-<table border="1">
-
+<table class="table table-dark table-hover table-striped">
   <thead>
-
     <tr>
       <th>ID</th>
       <th>Page Name</th>
@@ -97,52 +67,39 @@
       <th>Status</th>
       <th>Action</th>
     </tr>
-
   </thead>
 
   <tbody>
-
     @for(page of pages; track page.id) {
 
-      <tr>
+    <tr>
+      <td>{{ page.id }}</td>
 
-        <td>{{ page.id }}</td>
+      <td>{{ page.page_name }}</td>
 
-        <td>{{ page.page_name }}</td>
+      <td>{{ page.route }}</td>
 
-        <td>{{ page.route }}</td>
+      <td>{{ page.description }}</td>
 
-        <td>{{ page.description }}</td>
+      <td>{{ page.sort_order }}</td>
 
-        <td>{{ page.sort_order }}</td>
+      <td>
+        {{ page.is_active == 1 ? "Active" : "Inactive" }}
+      </td>
 
-        <td>
-          {{ page.is_active == 1 ? 'Active' : 'Inactive' }}
-        </td>
+      <td>
+        <button class="btn btn-warning" (click)="editPage(page)">Edit</button>
 
-        <td>
-
-          <button
-            (click)="editPage(page)">
-
-            Edit
-
-          </button>
-
-          <button
-            *ngIf="page.is_active == 1"
-            (click)="deletePage(page.id)">
-
-            Nonaktifkan
-
-          </button>
-
-        </td>
-
-      </tr>
+        <button
+          class="btn btn-danger"
+          *ngIf="page.is_active == 1"
+          (click)="deletePage(page.id)"
+        >
+          Nonaktifkan
+        </button>
+      </td>
+    </tr>
 
     }
-
   </tbody>
-
 </table>
